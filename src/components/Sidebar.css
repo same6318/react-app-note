@@ -1,0 +1,57 @@
+button {
+  background: none;
+  border: none;
+  color: #08c;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.app-sidebar {
+  width: 30%; /*サイドバー自体の幅*/
+  height: 100vh;
+  border-right: 1px solid #ddd;
+}
+
+.app-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.app-sidebar-header h1 {
+  margin: 0;
+}
+
+.app-sidebar-notes {
+  height: calc(100vh - 78px); /*縦100の高さから78px分を引いた残りの場所を示す*/
+  overflow-y: scroll; /*隠れたところはスクロールで見えるようになるので、ページの高さが縦長になるのを防ぐ*/
+}
+
+.app-sidebar-note {
+  padding: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar-note-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-sidebar-note p {
+  margin: 10px 0;
+}
+
+.app-sidebar-note small {
+  color: #999;
+}
+
+.app-sidebar-note:hover {
+  background-color: #e0e0e0;
+}
+
+.app-sidebar-note.active { /*コードの書き方注意 スペース入れない*/
+  background-color: #e0e0e0;
+}
