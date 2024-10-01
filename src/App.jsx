@@ -18,7 +18,9 @@ function App() {
   }, [notes]);//notesの中身が変わる度にコールバック関数が発火する
 
   useEffect(() => {
-    setActiveNote(notes[0].id);
+    if(notes.length > 0) {
+      setActiveNote(notes[0].id);
+    }
   }, []); //最新の更新されたノート＝配列の0を常に取ってくる
 
   const onAddNote = () => {
