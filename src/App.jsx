@@ -6,7 +6,7 @@ import uuid from 'react-uuid';
 import { useNavigate } from 'react-router-dom'
 
 
-function App() {
+function App ({ setIsAuth }) {
 
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("notes")) || []); 
@@ -74,7 +74,7 @@ function App() {
         onDeleteNote={onDeleteNote}
         activeNote={activeNote}
         setActiveNote={setActiveNote}
-        handleHome={handleHome}
+        setIsAuth={setIsAuth}
       />
       <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
     </div>

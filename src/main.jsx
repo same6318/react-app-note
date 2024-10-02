@@ -13,7 +13,7 @@ function Main() {
     <Router>
       <Routes>
         <Route path='/' element={<Home setIsAuth={setIsAuth} />}></Route>
-        <Route path='/app' element={<App />}></Route>
+        <Route path='/app' element={<App setIsAuth={setIsAuth} />}></Route>
       </Routes>
     </Router>
     {/* <App /> */}
