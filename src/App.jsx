@@ -3,9 +3,11 @@ import './App.css'
 import Main from './components/Main'
 import Sidebar from './components/Sidebar'
 import uuid from 'react-uuid';
+import { useNavigate } from 'react-router-dom'
 
 
 function App() {
+
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("notes")) || []); 
     //ローカルストレージに保存したnotes。json形式なので、parseで取り出す
@@ -59,6 +61,11 @@ function App() {
     setNotes(updatedNotesArray); //編集された後のnoteの配列を入れたものをsetNotesとして出力する
   };
 
+  const navigate = useNavigate();
+  const handleHome = () => {
+    navigate("/")
+  }
+
   return (
     <div className='App'>
       <Sidebar
@@ -67,6 +74,7 @@ function App() {
         onDeleteNote={onDeleteNote}
         activeNote={activeNote}
         setActiveNote={setActiveNote}
+        handleHome={handleHome}
       />
       <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
     </div>
