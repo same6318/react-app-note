@@ -51,15 +51,15 @@ const Main = ({ activeNote, onUpdateNote }) => {
         <input 
           id='title'
           type="text" 
-          // value={activeNote.title} 
-          value={title} //useStateで管理されているtitleを使用
+          value={activeNote.title} 
+          // value={title} //useStateで管理されているtitleを使用すると、新規作成のノートまでデータ引継ぎされるので、駄目
           onChange={(e) => onEditNote("title", e.target.value)} 
         />
         <textarea 
           id="content" 
           placeholder='ノート内容を記入'
-          // value={activeNote.content}
-          value={noteText} //useStateで管理されているnoteTextを使用
+          value={activeNote.content}
+          // value={noteText} //useStateで管理されているnoteTextを使用すると、新規作成のノートまでデータ引継ぎされるので、駄目
           onChange={(e) => onEditNote("content", e.target.value)} 
         ></textarea>
         <button onClick={createNote}>ノートを保存する</button>
