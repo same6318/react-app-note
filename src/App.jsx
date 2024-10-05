@@ -62,9 +62,6 @@ function App ({ setIsAuth }) {
   };
 
   const navigate = useNavigate();
-  const handleHome = () => {
-    navigate("/")
-  }
 
   return (
     <div className='App'>
