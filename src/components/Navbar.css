@@ -1,0 +1,27 @@
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: rgb(173, 95, 95);
+  gap: 45px;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s;
+}
+
+nav a:hover {
+  color: cadetblue;
+}
+
+button.navButton {
+  color: white;
+  transition: all 0.3s;
+}
+
+button.navButton:hover {
+  color: cadetblue;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Main.css";
 import ReactMarkdown from "react-markdown";
 import { addDoc, collection } from 'firebase/firestore';
@@ -8,6 +8,14 @@ const Main = ({ activeNote, onUpdateNote }) => {
   // titleとnoteTextをuseStateで状態管理する
   const [title, setTitle] = useState(activeNote?.title || "");
   const [noteText, setNoteText] = useState(activeNote?.content || "");
+
+  // activeNoteが変わった時にtitleとnoteTextを更新する
+  useEffect(() => {
+    if (activeNote) {
+      setTitle(activeNote.title || "");
+      setNoteText(activeNote.content || "");
+    }
+  }, [activeNote]);
 
   const onEditNote = (key, value) => {
     // 状態を更新する
@@ -36,6 +44,13 @@ const Main = ({ activeNote, onUpdateNote }) => {
         }
       });
       console.log("ノートが正常に追加されました");
+      //新規ノート作成後にフォームをリセット
+      // setTitle("");
+      // setNoteText("");
+
+      //ローカルストレージからノートデータを削除
+      localStorage.removeItem("notes"); //notesキーに保存されているデータを削除
+
     } catch (error) {
       console.error("ノートの追加でエラーが発生しました：", error);
     }
@@ -51,15 +66,15 @@ const Main = ({ activeNote, onUpdateNote }) => {
         <input 
           id='title'
           type="text" 
-          value={activeNote.title} 
-          // value={title} //useStateで管理されているtitleを使用すると、新規作成のノートまでデータ引継ぎされるので、駄目
+          // value={activeNote.title} 
+          value={title} //useStateで管理されているtitleを使用すると、新規作成のノートまでデータ引継ぎされるので、駄目
           onChange={(e) => onEditNote("title", e.target.value)} 
         />
         <textarea 
           id="content" 
           placeholder='ノート内容を記入'
-          value={activeNote.content}
-          // value={noteText} //useStateで管理されているnoteTextを使用すると、新規作成のノートまでデータ引継ぎされるので、駄目
+          // value={activeNote.content}
+          value={noteText} //useStateで管理されているnoteTextを使用すると、新規作成のノートまでデータ引継ぎされるので、駄目
           onChange={(e) => onEditNote("content", e.target.value)} 
         ></textarea>
         <button onClick={createNote}>ノートを保存する</button>

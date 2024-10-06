@@ -2,16 +2,32 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Main from './components/Main'
 import Sidebar from './components/Sidebar'
+import Home from './components/Home';
 import uuid from 'react-uuid';
 import { useNavigate } from 'react-router-dom'
+import { deleteDoc, doc, collection, getDocs } from 'firebase/firestore';
+import { db } from "./firebase";
+
 
 
 function App ({ setIsAuth }) {
+
+  const [noteList, setNoteList] = useState([]);
+
+  useEffect(() => {
+    const getNotes = async () => {
+      const data = await getDocs(collection(db, "notes"));
+      // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//data関数で取り出す
+      setNoteList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//data関数で取り出す
+    }
+    getNotes();
+  }, []);
 
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("notes")) || []); 
     //ローカルストレージに保存したnotes。json形式なので、parseで取り出す
     //データがない時は、空の配列を用意する（サイドバーにノートを追加していくときに配列形式で保存していくため）
+  
   const [activeNote, setActiveNote] = useState(false);
 
   useEffect(() => {
@@ -37,7 +53,8 @@ function App ({ setIsAuth }) {
     console.log(notes);
   };
 
-  const onDeleteNote = (id) => {
+  const onDeleteNote = async(id) => {
+    await deleteDoc(doc(db, "notes", id));
     const filterNotes = notes.filter((note) => note.id !== id);
     // 押したID以外のnoteを残す為のfilter関数
     setNotes(filterNotes);
@@ -67,11 +84,10 @@ function App ({ setIsAuth }) {
     <div className='App'>
       <Sidebar
         onAddNote={onAddNote} 
-        notes={notes} 
+        notes={notes}
         onDeleteNote={onDeleteNote}
         activeNote={activeNote}
         setActiveNote={setActiveNote}
-        setIsAuth={setIsAuth}
       />
       <Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
     </div>
